@@ -17,5 +17,5 @@ jobs:
         uses: docker/setup-buildx-action@v1
       - name: makepkg
         run: |
-          docker run --interactive --tty --rm --volume .:/package faddat/makepkg
+          docker run --rm --volume .:/package faddat/makepkg --noconfirm
 
