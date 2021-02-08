@@ -18,5 +18,5 @@ jobs:
       - name: makepkg
         run: |
           cd scripts
-          docker run --rm --volume ./:/package faddat/makepkg --noconfirm
+          docker run --rm --volume $(pwd):/package faddat/makepkg --noconfirm
 
