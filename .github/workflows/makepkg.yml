@@ -1,19 +1,21 @@
-name: PKGBUILD CI
+name: PKGBUILD
 
 on: [push, pull_request]
 
 jobs:
-  pkgbuild:
+  multi:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout
-      uses: actions/checkout@v2
-    - name: Makepkg Build and Check
-      id: makepkg
-      uses: edlanglois/pkgbuild-action@v1
-      with: 
-        pkgdir: scripts
-    - name: Upload Package Archive
-      uses: actions/upload-artifact@v2
-      with:
-         path: scripts/*.zst
+      -
+        name: Checkout
+        uses: actions/checkout@v2
+      -
+        name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+      -
+        name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+      - name: makepkg
+        run: |
+          docker run --interactive --tty --rm --volume .:/package faddat/makepkg
+
